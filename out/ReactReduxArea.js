@@ -18,7 +18,7 @@ exports.CreateDispatchAction = (dispatch, actionCreator) => {
     });
     return dispatchVersion;
 };
-const CreateDispatchActions = (dispatch, actionCreatorListObject) => {
+exports.CreateDispatchActions = (dispatch, actionCreatorListObject) => {
     const formattedData = {};
     for (const key of Object.keys(actionCreatorListObject)) {
         const item = actionCreatorListObject[key];
@@ -27,14 +27,14 @@ const CreateDispatchActions = (dispatch, actionCreatorListObject) => {
     }
     return formattedData;
 };
-exports.CreateDispatchActionsObject = (actionCreatorListObject) => {
+exports.useDispatchActions = (actionCreatorListObject) => {
     const dispatch = react_redux_1.useDispatch();
-    const memoDispatchActionsObject = react_1.useMemo(() => CreateDispatchActions(dispatch, actionCreatorListObject), [dispatch, actionCreatorListObject]);
+    const memoDispatchActionsObject = react_1.useMemo(() => exports.CreateDispatchActions(dispatch, actionCreatorListObject), [dispatch, actionCreatorListObject]);
     return memoDispatchActionsObject;
 };
-exports.CreateAreaHook = (areaActions, selector) => {
+exports.useAreaHook = (areaActions, selector) => {
     const areaState = react_redux_1.useSelector(selector);
-    const dispatchActions = exports.CreateDispatchActionsObject(areaActions);
+    const dispatchActions = exports.useDispatchActions(areaActions);
     return Object.assign(Object.assign({}, areaState), dispatchActions);
 };
 //# sourceMappingURL=ReactReduxArea.js.map

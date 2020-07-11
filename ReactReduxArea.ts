@@ -41,7 +41,7 @@ export const CreateDispatchAction = <T extends MethodWithActionName>(
    return dispatchVersion
 }
 
-const CreateDispatchActions = <T extends Record<keyof T, MethodWithActionName>>(
+export const CreateDispatchActions = <T extends Record<keyof T, MethodWithActionName>>(
    dispatch: Dispatch,
    actionCreatorListObject: T
 ): IDispatchActionObject<T> => {
@@ -55,7 +55,7 @@ const CreateDispatchActions = <T extends Record<keyof T, MethodWithActionName>>(
    return formattedData
 }
 
-export const CreateDispatchActionsObject = <T extends MapMethodWithActionName<T>>(
+export const useDispatchActions = <T extends MapMethodWithActionName<T>>(
    actionCreatorListObject: T
 ) => {
    const dispatch = useDispatch()
@@ -66,12 +66,12 @@ export const CreateDispatchActionsObject = <T extends MapMethodWithActionName<T>
    return memoDispatchActionsObject
 }
 
-export const CreateAreaHook = <T extends MapMethodWithActionName<T>, TReduxStoreState, TAreaState>(
+export const useAreaHook = <T extends MapMethodWithActionName<T>, TReduxStoreState, TAreaState>(
    areaActions: T,
    selector: (state: TReduxStoreState) => TAreaState
 ) => {
    const areaState = useSelector(selector)
-   const dispatchActions = CreateDispatchActionsObject(areaActions)
+   const dispatchActions = useDispatchActions(areaActions)
    return {
       ...areaState,
       ...dispatchActions

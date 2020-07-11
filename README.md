@@ -22,9 +22,8 @@ Sub module for Redux-area with react specific method.
 
 This modules add react specific functionality to [Redux-area](https://www.npmjs.com/package/redux-area)
 
-- CreateAreaHook
-- CreateDispatchAction (It is recommended not to use - Used internally in CreateDispatchActionsObject)
-- CreateDispatchActionsObject
+- useAreaHook
+- useDispatchActions
 
 This is a base example for a redux-area `userArea` (All of this is without use of react)
 
@@ -66,11 +65,11 @@ export const UserReducers = area.rootReducer()
 
 After this the examples uses react-redux-area and react specific functionality.
 
-### CreateAreaHook
+### useAreaHook
 
 Takes action from an area and a selector and create an area hook.
 
-This is a wrap of CreateDispatchActionsObject and a selector to make an easy hook.
+This is a wrap of useDispatchActions and a selector to make an easy hook.
 
 Often its better to define the hook your self, if you want to export methods that should not be dispatch,
 like an Equal method ect..
@@ -78,9 +77,11 @@ like an Equal method ect..
 ```tsx
 // Uses ex: (Add this line in the area file)
 const useUser = () =>
-  CreateAreaHook(userActions, (state: IReduxStore) => state.user)
+  useAreaHook(userActions, (state: IReduxStore) => state.user)
 ```
- Uses in component:
+
+Uses in component:
+
 ```tsx
 const UserDetails: FC = () => {
   const { currentUser: user, rename } = useUser()
@@ -99,10 +100,11 @@ const UserDetails: FC = () => {
   )
 }
 ```
+
 Actual implementation: Copy if custom hook is needed (you don't need the generic for your copy)
 
 ```ts
-export const CreateAreaHook = <
+export const useAreaHook = <
   T extends MapMethodWithActionName<T>,
   TReduxStoreState,
   TAreaState
@@ -111,7 +113,7 @@ export const CreateAreaHook = <
   selector: (state: TReduxStoreState) => TAreaState
 ) => {
   const areaState = useSelector(selector)
-  const dispatchActions = CreateDispatchActionsObject(areaActions)
+  const dispatchActions = useDispatchActions(areaActions)
   return {
     ...areaState,
     ...dispatchActions,
@@ -119,34 +121,25 @@ export const CreateAreaHook = <
 }
 ```
 
-#### CreateDispatchAction
+#### useDispatchActions
 
-> **it is recommended to** create a AreaHook and only use that. 
+Takes a map of `Action` and create a new map of dispatch version.
 
-Use this or `CreateDispatchActionsObject` in the hook
+Uses `CreateDispatchAction` (It exported but don't memorize the output, not recommended to use directly)
 
-**NOTE** This will not memorize the new dispatch action
-
-**It is recommended to** use `CreateDispatchActionsObject` instead which will memories the map it creates.
-
-Takes an `Action` created from `area.add` or `area.addFetch` and create a dispatch version of it.
+(`CreateDispatchAction` takes an `Action` created from `area.add` or `area.addFetch` and create a dispatch version of it.)
 
 It will take your method and wrap it in a dispatch.
+
 It will also add `actionName` and `name` from the `Action`
 
 > The `actionName` is shared by all 4 action for an addFetch, and can be use the track loading ect.
-
-#### CreateDispatchActionsObject
-
-Takes an an map of `Action` and create a new map of dispatch version.
-
-Uses `CreateDispatchAction`.
 
 This memorize the new map that all method a safe to use in react dependency array for effect and other hooks.
 
 ```tsx
 // It is recommended to only use this is an area hook (This is just show how it works)
-export const UserActions = CreateDispatchActionsObject(areaActions)
+export const UserActions = useDispatchActions(areaActions)
 
 // Uses in component:
 const UserDetails: FC<{ name: string }> = ({ name }) => {
