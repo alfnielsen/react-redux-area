@@ -4,11 +4,18 @@
 
 Sub module for Redux-area with react specific method.
 
+**react-redux-area**
+
 [react-redux-area on npmjs](https://www.npmjs.com/package/react-redux-area)
+
 [react-redux-area github](github.com/alfnielsen/react-redux-area)
 
+**redux-area**
+
 [redux-area on npmjs](https://www.npmjs.com/package/redux-area)
+
 [redux-area github](github.com/alfnielsen/redux-area)
+
 [redux-area documentation (github wiki)](https://github.com/alfnielsen/redux-area/wiki)
 
 ## React method added:
@@ -68,7 +75,9 @@ like an Equal method ect..
 // Uses ex: (Add this line in the area file)
 const useUser = () =>
   CreateAreaHook(userActions, (state: IReduxStore) => state.user)
-// Uses in component:
+```
+ Uses in component:
+```tsx
 const UserDetails: FC = () => {
   const { currentUser: user, rename } = useUser()
   return (
@@ -85,7 +94,10 @@ const UserDetails: FC = () => {
     </div>
   )
 }
-// Actual implementation: Copy if custom hook is needed (you don't need the generic for your copy)
+```
+Actual implementation: Copy if custom hook is needed (you don't need the generic for your copy)
+
+```ts
 export const CreateAreaHook = <
   T extends MapMethodWithActionName<T>,
   TReduxStoreState,
@@ -105,10 +117,13 @@ export const CreateAreaHook = <
 
 #### CreateDispatchAction
 
-> It Recommend to create a AreaHook and only use that. Use this or `CreateDispatchActionsObject` in the hook
+> **it is recommended to** create a AreaHook and only use that. 
+
+Use this or `CreateDispatchActionsObject` in the hook
 
 **NOTE** This will not memorize the new dispatch action
-It recommend to use CreateDispatchActionsObject instead which will memories the map it creates.
+
+**It is recommended to** use `CreateDispatchActionsObject` instead which will memories the map it creates.
 
 Takes an `Action` created from `area.add` or `area.addFetch` and create a dispatch version of it.
 
@@ -120,11 +135,13 @@ It will also add `actionName` and `name` from the `Action`
 #### CreateDispatchActionsObject
 
 Takes an an map of `Action` and create a new map of dispatch version.
+
 Uses `CreateDispatchAction`.
 
 This memorize the new map that all method a safe to use in react dependency array for effect and other hooks.
 
 ```tsx
+// It is recommended to only use this is an area hook (This is just show how it works)
 export const UserActions = CreateDispatchActionsObject(areaActions)
 
 // Uses in component:
@@ -147,13 +164,13 @@ const UserDetails: FC<{ name: string }> = ({ name }) => {
 ## Install
 
 ```sh
-npm install redux-area
+npm install react-redux-area
 ```
 
 Or
 
 ```sh
-yarn add redux-area
+yarn add react-redux-area
 ```
 
 ## Demo
