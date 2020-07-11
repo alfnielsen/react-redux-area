@@ -22,6 +22,10 @@ Sub module for Redux-area with react specific method.
 
 This modules add react specific functionality to [Redux-area](https://www.npmjs.com/package/redux-area)
 
+- CreateAreaHook
+- CreateDispatchAction (It is recommended not to use - Used internally in CreateDispatchActionsObject)
+- CreateDispatchActionsObject
+
 This is a base example for a redux-area `userArea` (All of this is without use of react)
 
 ```ts
