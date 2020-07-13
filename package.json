@@ -1,6 +1,6 @@
 {
   "name": "react-redux-area",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "simplified strongly typed redux (React methods)",
   "keywords": [
     "react",

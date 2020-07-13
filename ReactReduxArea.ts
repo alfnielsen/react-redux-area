@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Dispatch, AnyAction } from 'redux'
+import { AnyAction, Dispatch } from 'redux'
 
 export type MethodWithActionName = ((...args: any) => any) & {
    actionName: string
@@ -19,7 +19,7 @@ export type IDispatchActionObject<T extends MapMethodWithActionName<T>> = {
 
 export type Mutable<T> = { -readonly [K in keyof T]: T[K] }
 
-export const CreateDispatchAction = <T extends MethodWithActionName>(
+const CreateDispatchAction = <T extends MethodWithActionName>(
    dispatch: Dispatch<AnyAction>,
    actionCreator: T
 ): DispatchActionObjectMethod<T> => {
@@ -41,7 +41,7 @@ export const CreateDispatchAction = <T extends MethodWithActionName>(
    return dispatchVersion
 }
 
-export const CreateDispatchActions = <T extends Record<keyof T, MethodWithActionName>>(
+const CreateDispatchActions = <T extends Record<keyof T, MethodWithActionName>>(
    dispatch: Dispatch,
    actionCreatorListObject: T
 ): IDispatchActionObject<T> => {
@@ -55,7 +55,7 @@ export const CreateDispatchActions = <T extends Record<keyof T, MethodWithAction
    return formattedData
 }
 
-export const useDispatchActions = <T extends MapMethodWithActionName<T>>(
+const useDispatchActions = <T extends MapMethodWithActionName<T>>(
    actionCreatorListObject: T
 ) => {
    const dispatch = useDispatch()
@@ -66,7 +66,7 @@ export const useDispatchActions = <T extends MapMethodWithActionName<T>>(
    return memoDispatchActionsObject
 }
 
-export const useAreaHook = <T extends MapMethodWithActionName<T>, TReduxStoreState, TAreaState>(
+const useAreaHook = <T extends MapMethodWithActionName<T>, TReduxStoreState, TAreaState>(
    areaActions: T,
    selector: (state: TReduxStoreState) => TAreaState
 ) => {
@@ -78,3 +78,9 @@ export const useAreaHook = <T extends MapMethodWithActionName<T>, TReduxStoreSta
    }
 }
 
+export {
+   CreateDispatchAction,
+   CreateDispatchActions,
+   useDispatchActions,
+   useAreaHook
+}

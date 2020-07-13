@@ -1,3 +1,7 @@
+## 0.0.5
+
+Attempt to fix ts compiling, to create correct hooks.
+
 ## 0.0.2-0.0.3
 
 rename to `use` instead of create for hooks
