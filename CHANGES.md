@@ -1,6 +1,8 @@
-## 0.0.5
+## 0.0.6
 
 Attempt to fix ts compiling, to create correct hooks.
+
+export useDispatchActions as default (testing..)
 
 ## 0.0.2-0.0.3
 

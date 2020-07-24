@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AnyAction, Dispatch } from 'redux'
 
@@ -19,7 +18,7 @@ export type IDispatchActionObject<T extends MapMethodWithActionName<T>> = {
 
 export type Mutable<T> = { -readonly [K in keyof T]: T[K] }
 
-const CreateDispatchAction = <T extends MethodWithActionName>(
+export const CreateDispatchAction = <T extends MethodWithActionName>(
    dispatch: Dispatch<AnyAction>,
    actionCreator: T
 ): DispatchActionObjectMethod<T> => {
@@ -41,7 +40,7 @@ const CreateDispatchAction = <T extends MethodWithActionName>(
    return dispatchVersion
 }
 
-const CreateDispatchActions = <T extends Record<keyof T, MethodWithActionName>>(
+export const CreateDispatchActions = <T extends Record<keyof T, MethodWithActionName>>(
    dispatch: Dispatch,
    actionCreatorListObject: T
 ): IDispatchActionObject<T> => {
@@ -55,18 +54,8 @@ const CreateDispatchActions = <T extends Record<keyof T, MethodWithActionName>>(
    return formattedData
 }
 
-const useDispatchActions = <T extends MapMethodWithActionName<T>>(
-   actionCreatorListObject: T
-) => {
-   const dispatch = useDispatch()
-   const memoDispatchActionsObject = useMemo(
-      () => CreateDispatchActions(dispatch, actionCreatorListObject),
-      [dispatch, actionCreatorListObject]
-   )
-   return memoDispatchActionsObject
-}
 
-const useAreaHook = <T extends MapMethodWithActionName<T>, TReduxStoreState, TAreaState>(
+export const useAreaHook = <T extends MapMethodWithActionName<T>, TReduxStoreState, TAreaState>(
    areaActions: T,
    selector: (state: TReduxStoreState) => TAreaState
 ) => {
@@ -78,9 +67,16 @@ const useAreaHook = <T extends MapMethodWithActionName<T>, TReduxStoreState, TAr
    }
 }
 
-export {
-   CreateDispatchAction,
-   CreateDispatchActions,
-   useDispatchActions,
-   useAreaHook
+const useDispatchActions = <T extends MapMethodWithActionName<T>>(
+   actionCreatorListObject: T
+) => {
+   const dispatch = useDispatch()
+   const dispatchActionsObject = CreateDispatchActions(dispatch, actionCreatorListObject)
+   return dispatchActionsObject
+   // const memoDispatchActionsObject = useMemo(
+   //    () => CreateDispatchActions(dispatch, actionCreatorListObject),
+   //    [dispatch, actionCreatorListObject]
+   // )
+   // return memoDispatchActionsObject
 }
+export default useDispatchActions

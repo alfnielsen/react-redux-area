@@ -1,6 +1,6 @@
 {
   "name": "react-redux-area",
-  "version": "0.0.5",
+  "version": "0.0.11",
   "description": "simplified strongly typed redux (React methods)",
   "keywords": [
     "react",
@@ -20,8 +20,6 @@
   "license": "ISC",
   "homepage": "https://github.com/alfnielsen/react-redux-area#readme",
   "dependencies": {
-    "immer": "^5.3.6",
-    "react": "^16.13.1",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5"
   },

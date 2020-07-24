@@ -12,8 +12,8 @@ export declare type IDispatchActionObject<T extends MapMethodWithActionName<T>> 
 export declare type Mutable<T> = {
     -readonly [K in keyof T]: T[K];
 };
-declare const CreateDispatchAction: <T extends MethodWithActionName>(dispatch: Dispatch<AnyAction>, actionCreator: T) => DispatchActionObjectMethod<T>;
-declare const CreateDispatchActions: <T extends Record<keyof T, MethodWithActionName>>(dispatch: Dispatch<AnyAction>, actionCreatorListObject: T) => IDispatchActionObject<T>;
+export declare const CreateDispatchAction: <T extends MethodWithActionName>(dispatch: Dispatch<AnyAction>, actionCreator: T) => DispatchActionObjectMethod<T>;
+export declare const CreateDispatchActions: <T extends Record<keyof T, MethodWithActionName>>(dispatch: Dispatch<AnyAction>, actionCreatorListObject: T) => IDispatchActionObject<T>;
+export declare const useAreaHook: <T extends Record<keyof T, MethodWithActionName>, TReduxStoreState, TAreaState>(areaActions: T, selector: (state: TReduxStoreState) => TAreaState) => TAreaState & IDispatchActionObject<T>;
 declare const useDispatchActions: <T extends Record<keyof T, MethodWithActionName>>(actionCreatorListObject: T) => IDispatchActionObject<T>;
-declare const useAreaHook: <T extends Record<keyof T, MethodWithActionName>, TReduxStoreState, TAreaState>(areaActions: T, selector: (state: TReduxStoreState) => TAreaState) => TAreaState & IDispatchActionObject<T>;
-export { CreateDispatchAction, CreateDispatchActions, useDispatchActions, useAreaHook };
+export default useDispatchActions;
